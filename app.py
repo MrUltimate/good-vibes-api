@@ -1,5 +1,4 @@
-from flask import Flask, jsonify, request, make_response
-from flask_cors import CORS
+from quart import Quart, jsonify
 import newspaper
 from date_guesser import guess_date, Accuracy
 from langdetect import detect, detect_langs
@@ -12,10 +11,8 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import nltk
 nltk.download('punkt')
 
-loop = asyncio.get_event_loop()
-app = Flask(__name__)
+app = Quart(__name__)
 app.config['JSON_SORT_KEYS'] = False
-CORS(app)
 
 
 @app.route('/', methods=['GET'])
@@ -120,15 +117,17 @@ async def get_article(session, url):
 
 
 @app.route('/v0/goodvibes/', methods=['GET'])
-def get_reddit_urls():
+async def get_reddit_urls():
     try:
         response = requests.get(
-            'https://reddit.com/r/UpliftingNews/hot/.json?limit=30', headers={'user-agent': 'Mozilla/5.0'})
+            'https://reddit.com/r/UpliftingNews/hot/.json?limit=50', headers={'user-agent': 'Mozilla/5.0'})
         # Access JSON Content
         for url in response.json()['data']['children']:
             urls.append(url['data']['url'])
 
-        loop.run_until_complete(main(urls))
+        await main(urls)
+
+        # loop.run_until_complete(main(urls))
         # loop.close()
 
         return jsonify(finalJSON), 200
