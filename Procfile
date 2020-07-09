@@ -1,1 +1,1 @@
-web: gunicorn quarttest:app --preload --timeout 0
+web: gunicorn --worker-class quart.worker.GunicornWorker quarttest:app

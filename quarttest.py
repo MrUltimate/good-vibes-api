@@ -123,7 +123,7 @@ async def get_article(session, url):
 async def get_reddit_urls():
     try:
         response = requests.get(
-            'https://reddit.com/r/UpliftingNews/hot/.json?limit=30', headers={'user-agent': 'Mozilla/5.0'})
+            'https://reddit.com/r/UpliftingNews/hot/.json?limit=50', headers={'user-agent': 'Mozilla/5.0'})
         # Access JSON Content
         for url in response.json()['data']['children']:
             urls.append(url['data']['url'])
