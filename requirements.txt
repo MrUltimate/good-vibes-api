@@ -103,3 +103,4 @@ yarl==1.4.2
 zappa==0.51.0
 zipp==3.1.0
 zope.interface==5.1.0
+gunicorn
