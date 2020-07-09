@@ -45,7 +45,7 @@ async def get_article(session, url):
         article = newspaper.Article(url)
         article.set_html(content)
 
-        try:
+        if response.status == 200:
             article.parse()
             article_dict = {}
             article_dict['status'] = 'ok'
@@ -111,7 +111,7 @@ async def get_article(session, url):
             finalJSON.append(article_dict)
             # return article_dict
             # finalJSON = {**finalJSON, **article_dict}
-        except newspaper.article.ArticleException:
+        else:
             article_dict = {}
             article_dict['status'] = 'error'
             article_dict['article'] = 'An error occured parsing this article'
@@ -123,7 +123,7 @@ async def get_article(session, url):
 def get_reddit_urls():
     try:
         response = requests.get(
-            'https://reddit.com/r/UpliftingNews/hot/.json?limit=25', headers={'user-agent': 'Mozilla/5.0'})
+            'https://reddit.com/r/UpliftingNews/hot/.json?limit=30', headers={'user-agent': 'Mozilla/5.0'})
         # Access JSON Content
         for url in response.json()['data']['children']:
             urls.append(url['data']['url'])
