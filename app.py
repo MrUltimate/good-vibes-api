@@ -1,3 +1,4 @@
+import os
 from quart import Quart, jsonify
 import newspaper
 from date_guesser import guess_date, Accuracy
