@@ -1,1 +1,1 @@
-hypercorn -b 0.0.0.0:${PORT} "app:app"
+web: gunicorn --worker-class quart.worker.GunicornWorker app:app 
