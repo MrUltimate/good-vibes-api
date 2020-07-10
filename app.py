@@ -6,7 +6,7 @@ from langdetect import detect, detect_langs
 import json
 import asyncio
 import aiohttp
-import requests
+import httpx
 from requests.exceptions import HTTPError
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import nltk
@@ -120,21 +120,20 @@ async def get_article(session, url):
 @app.route('/v0/goodvibes/', methods=['GET'])
 async def get_reddit_urls():
     try:
-        response = requests.get(
-            'https://reddit.com/r/UpliftingNews/hot/.json?limit=40', headers={'user-agent': 'Mozilla/5.0'})
-        # Access JSON Content
-        for url in response.json()['data']['children']:
-            urls.append(url['data']['url'])
-
+        async with httpx.AsyncClient() as client:
+            response = await client.get(
+                'https://reddit.com/r/UpliftingNews/hot/.json?limit=50')
+            print(response)
+            # Access JSON Content
+            for url in response.json()['data']['children']:
+                urls.append(url['data']['url'])
+        # Await Tasks
         await main(urls)
-
-        # loop.run_until_complete(main(urls))
-        # loop.close()
-
+        # Return Final JSON Data
         return jsonify(finalJSON), 200
     except Exception as err:
         return str(err), 400
 
 
-if __name__ == '__main__':
-    app.run()
+# if __name__ == '__main__':
+#     app.run()
