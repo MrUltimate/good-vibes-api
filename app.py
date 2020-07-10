@@ -124,7 +124,7 @@ async def get_reddit_urls():
     try:
         async with httpx.AsyncClient() as client:
             response = await client.get(
-                'https://reddit.com/r/UpliftingNews/hot/.json?limit=50')
+                'https://reddit.com/r/UpliftingNews/hot/.json?limit=40')
             print(response)
             # Access JSON Content
             for url in response.json()['data']['children']:
