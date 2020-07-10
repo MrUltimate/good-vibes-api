@@ -1,5 +1,6 @@
 import os
 from quart import Quart, jsonify
+from quart_cors import cors
 import newspaper
 from date_guesser import guess_date, Accuracy
 from langdetect import detect, detect_langs
@@ -13,6 +14,7 @@ import nltk
 nltk.download('punkt')
 
 app = Quart(__name__)
+app = cors(app, allow_origin="http://localhost:3000/")
 app.config['JSON_SORT_KEYS'] = False
 
 
