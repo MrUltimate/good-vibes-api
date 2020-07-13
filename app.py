@@ -1,4 +1,5 @@
 import os
+import sys
 from quart import Quart, jsonify
 from quart_cors import cors
 import newspaper
@@ -14,12 +15,13 @@ import nltk
 nltk.download('punkt')
 
 app = Quart(__name__)
-app = cors(app, allow_origin="http://localhost:3000/")
+app = cors(app, allow_origin="http://localhost:3000")
 app.config['JSON_SORT_KEYS'] = False
 
 
 @app.route('/', methods=['GET'])
 def start():
+    print(sys.path)
     return 'Welcome!', 200
 
 
@@ -122,6 +124,8 @@ async def get_article(session, url):
 @app.route('/v0/goodvibes/', methods=['GET'])
 async def get_reddit_urls():
     try:
+        urls.clear()
+        finalJSON.clear()
         async with httpx.AsyncClient() as client:
             response = await client.get(
                 'https://reddit.com/r/UpliftingNews/hot/.json?limit=40')
@@ -132,6 +136,7 @@ async def get_reddit_urls():
         # Await Tasks
         await main(urls)
         # Return Final JSON Data
+        print(len(finalJSON))
         return jsonify(finalJSON), 200
     except Exception as err:
         return str(err), 400
