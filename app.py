@@ -15,7 +15,7 @@ import nltk
 nltk.download('punkt')
 
 app = Quart(__name__)
-app = cors(app, allow_origin="https://goodvibes.helloshivam.com")
+app = cors(app, allow_origin="*")
 app.config['JSON_SORT_KEYS'] = False
 
 
