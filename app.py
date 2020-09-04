@@ -6,7 +6,7 @@ from quart_cors import cors
 
 app = Quart(__name__)
 app = cors(
-    app, allow_origin="http://localhost:3000")
+    app, allow_origin="*")
 app.config['JSON_SORT_KEYS'] = False
 
 json_data = []
