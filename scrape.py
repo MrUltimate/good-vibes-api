@@ -6,6 +6,7 @@ from langdetect import detect, detect_langs
 import json
 import asyncio
 import aiohttp
+from aiohttp.client import ClientTimeout
 import httpx
 from requests.exceptions import HTTPError
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
@@ -49,7 +50,7 @@ async def get_article(session, url):
 
     print(f'Processing URL: {url}')
 
-    async with session.get(url) as response:
+    async with session.get(url, timeout=ClientTimeout(total=0)) as response:
         content = await response.read()
         article = newspaper.Article(url)
         article.set_html(content)
