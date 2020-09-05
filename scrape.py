@@ -128,7 +128,7 @@ async def get_article(session, url):
             else:
                 article_dict = {}
                 article_dict['status'] = 'error'
-                article_dict['article'] = 'An error occured parsing this article'
+                article_dict['article'] = 'An error occurred parsing this article'
                 # return article_dict
                 finalJSON.append(article_dict)
 
