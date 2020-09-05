@@ -35,13 +35,16 @@ async def get_reddit_urls():
         pass
 
 
-async def main(urls):
-    tasks = []
-    async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False, use_dns_cache=False,), headers={"Connection": "close"}) as session:
-        for url in urls:
-            task = asyncio.ensure_future(get_article(session, url))
-            tasks.append(task)
-        await asyncio.wait(tasks)
+try:
+    async def main(urls):
+        tasks = []
+        async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False, use_dns_cache=False,), headers={"Connection": "close"}) as session:
+            for url in urls:
+                task = asyncio.ensure_future(get_article(session, url))
+                tasks.append(task)
+            await asyncio.wait(tasks)
+except:
+    pass
 
 
 async def get_article(session, url):
