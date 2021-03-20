@@ -44,7 +44,7 @@ isort==4.3.21
 itsdangerous==1.1.0
 jedi==0.17.1
 jieba3k==0.35.1
-Jinja2==2.11.1
+Jinja2==2.11.3
 jmespath==0.9.5
 jupyter-client==6.1.5
 jupyter-core==4.6.3
